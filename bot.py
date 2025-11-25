@@ -5,6 +5,9 @@ from pyrogram import Client, idle, __version__
 
 from config import Config
 
+from health_server import start_in_background
+start_in_background()
+
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
