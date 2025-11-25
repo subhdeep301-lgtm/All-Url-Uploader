@@ -16,20 +16,18 @@
 
 
 
-# Dockerfile (replace your current one)
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # Prevent interactive prompts during apt
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
-ARG PORT=8080
 
 WORKDIR /app
 
-# Install minimal ffmpeg (no recommended packages), then clean up
+# Install minimal ffmpeg (no recommended packages), then clean up lists to keep image small
 RUN apt-get update \
  && apt-get install -y --no-install-recommends ffmpeg \
- && apt-get purge -y --auto-remove \
+ && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy app
@@ -42,4 +40,3 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 EXPOSE 8080
 
 CMD ["python3", "bot.py"]
-
